@@ -21,11 +21,11 @@ namespace Vaquinha.Unit.Tests.DomainTests
         }
 
         [Fact]
-        [Trait("Doacao", "Doacao_CorretamentePreenchidos_DoacaoValida")]
-        public void Doacao_CorretamentePreenchidos_DoacaoValida()
+        [Trait("Doacao", "Doacao_CorretamentePreenchidos_DoacaoValida_SemTaxa")]
+        public void Doacao_CorretamentePreenchidos_DoacaoValida_SemTaxa()
         {           
             // Arrange
-            var doacao = _doacaoFixture.DoacaoValida();
+            var doacao = _doacaoFixture.DoacaoValida(false, 5, false, false);
             doacao.AdicionarEnderecoCobranca(_enderecoFixture.EnderecoValido());
             doacao.AdicionarFormaPagamento(_cartaoCreditoFixture.CartaoCreditoValido());
 
@@ -34,6 +34,7 @@ namespace Vaquinha.Unit.Tests.DomainTests
 
             // Assert
             valido.Should().BeTrue(because: "os campos foram preenchidos corretamente");
+            doacao.Valor.Should().Be(5, because: "Valor sem o acréscimo da taxa");
             doacao.ErrorMessages.Should().BeEmpty();
         }
 
