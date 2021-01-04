@@ -121,5 +121,22 @@ namespace Vaquinha.Unit.Tests.DomainTests
 
             cartaoCredito.ErrorMessages.Should().Contain("Campo Data de Vencimento do cartão de crédito inválido", because: "o campo Validade é obrigatório e não foi preenchido corretamente.");
         }
+
+        [Fact]
+        [Trait("CartaoCredito", "CartaoCredito_NumeroCartaoInvalido_CartaoCreditoInvalido")]
+        public void CartaoCredito_NumeroCartaoInvalido_CartaoCreditoInvalido()
+        {
+            // Arrange
+            var cartaoCredito = _fixture.CartaoCreditoNumeroCartaoInvalido();
+
+            // Act
+            var valido = cartaoCredito.Valido();
+
+            // Assert
+            valido.Should().BeFalse(because: "Numero do cartão de credito é invalido");
+            cartaoCredito.ErrorMessages.Should().HaveCount(1, because: "Numero do cartão de credito é invalido");
+
+            cartaoCredito.ErrorMessages.Should().Contain("Campo Número de cartão de crédito inválido", because: "o campo Numéro do cartão é obrigatório e não foi preenchido corretamente.");
+        }
     }
 }
