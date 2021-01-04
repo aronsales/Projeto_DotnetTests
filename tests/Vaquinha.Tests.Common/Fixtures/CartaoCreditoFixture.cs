@@ -82,5 +82,17 @@ namespace Vaquinha.Tests.Common.Fixtures
             return faker.Generate();
         }
 
+        public CartaoCredito CartaoCreditoValidadeMinLenghtInvalida()
+        {
+            var cartaoCredito = new Faker("pt_BR").Finance;
+            var pessoa = new Faker("pt_BR").Person;
+
+            var faker = new Faker<CartaoCredito>("pt_BR");
+
+            faker.CustomInstantiator(f =>
+                 new CartaoCredito(pessoa.FullName, cartaoCredito.CreditCardNumber(), "1", cartaoCredito.CreditCardCvv()));
+
+            return faker.Generate();
+        }
     }
 }
