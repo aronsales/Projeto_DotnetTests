@@ -105,5 +105,21 @@ namespace Vaquinha.Unit.Tests.DomainTests
             cartaoCredito.ErrorMessages.Should().Contain("O campo Nome Titular deve possuir no máximo 150 caracteres", because: "o campo Nome Titular é obrigatório e não foi preenchido.");
         }
 
+        [Fact]
+        [Trait("CartaoCredito", "CartaoCredito_ValidadeMinLenght_CartaoCreditoInvalido")]
+        public void CartaoCredito_ValidadeMinLenght_CartaoCreditoInvalido()
+        {
+            // Arrange
+            var cartaoCredito = _fixture.CartaoCreditoValidadeMinLenghtInvalida();
+
+            // Act
+            var valido = cartaoCredito.Valido();
+
+            // Assert
+            valido.Should().BeFalse(because: "Campo Data de Vencimento do cartão de crédito inválido");
+            cartaoCredito.ErrorMessages.Should().HaveCount(1, because: "Campo Data de Vencimento do cartão de crédito inválido");
+
+            cartaoCredito.ErrorMessages.Should().Contain("Campo Data de Vencimento do cartão de crédito inválido", because: "o campo Validade é obrigatório e não foi preenchido corretamente.");
+        }
     }
 }
